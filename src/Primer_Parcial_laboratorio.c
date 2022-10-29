@@ -17,6 +17,7 @@
 #include "tipo.h"
 #include "vehiculo.h"
 #include "nexo.h"
+#include "informe.h"
 
 #define TIPOS 3
 #define AUTOS 10
@@ -31,17 +32,20 @@ int main(void) {
 
 
 	int opcion;
+
 	int idAuto=1;
 	int idTipo=1;
 	int idHoja=2000;
 
-	TIP_AltaForzada(auxTipo, TIPOS, 0, &idTipo, "SEDAN 3PTAS");
-	TIP_AltaForzada(auxTipo, TIPOS, 1, &idTipo, "SEDAN 5PTAS");
-	TIP_AltaForzada(auxTipo, TIPOS, 2, &idTipo, "camionetas");
+	TIP_AltaForzada(auxTipo, TIPOS, 0, &idTipo, "SEDAN 3PTAS"); // 1
+	TIP_AltaForzada(auxTipo, TIPOS, 1, &idTipo, "SEDAN 5PTAS"); // 2
+	TIP_AltaForzada(auxTipo, TIPOS, 2, &idTipo, "CAMIONETAS");  //3
 
-	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 0, &idAuto,"MODELO 0023", 1997, "ROJO", 2);
-	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 1, &idAuto,"MODELO 2344", 1900, "VERDE", 1);
-	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 2, &idAuto,"MODELO 3453", 1945, "NEGRO MATE", 3);
+	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 0, &idAuto,"MODELO 0023", 1997, "ROJO", 2);       // 1
+	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 1, &idAuto,"MODELO 2344", 1900, "VERDE", 1);      // 2
+	NEXO_VehiculoAltaForzada(auxAuto, AUTOS, 2, &idAuto,"MODELO 3453", 1945, "NEGRO MATE", 3); // 3
+
+
 
 	do{
 			opcion=muestraMenu();
@@ -65,7 +69,7 @@ int main(void) {
 					NEXO_AltaHoja(auxHoja, HOJA, auxAuto, AUTOS, &idHoja);
 					break;
 				case 7: ///LISTAR VOUCHER
-					//NEXO_PrintAllVoucher(auxVoucher, VOUCHER, auxViaje, VIAJE);
+					//pendiente
 					break;
 				case 8: ///INFORMES
 					INFO_Informes(auxAuto, AUTOS, auxHoja, HOJA, auxTipo, TIPOS);

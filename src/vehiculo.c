@@ -60,7 +60,7 @@ int VEHI_CargaVehiculo(eVehiculo*arrayVehi,int limitVehi,int index,int*idAuto){
 		arrayVehi[index]=bufferVehi;
 		(*idAuto)++;
 
-		VIA_PrintUno(&bufferVehi);
+		VEHI_PrintUno(&bufferVehi);
 		printf("\n\n CARGA EXITOSA");
 	}
 	return iGet;
@@ -153,7 +153,7 @@ int VEHI_PrintAll(eVehiculo*arrayVehi,int limitVehi){
 		iGet=0;
 		for(i=0;i<limitVehi;i++){
 			if(arrayVehi[i].isEmpty==LLENO){
-				VIA_PrintUno(&arrayVehi[i]);
+				VEHI_PrintUno(&arrayVehi[i]);
 			}
 		}
 	}

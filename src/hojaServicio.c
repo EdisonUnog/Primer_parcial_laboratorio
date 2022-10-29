@@ -81,7 +81,7 @@ int HOJA_Alta(eHojaServicio*arrayHoja,int limitHoja,int*idHoja){
 	return iGet;
 }
 
-eHojaServicio VOU_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,int mes,int anio){
+eHojaServicio HOJA_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,int mes,int anio){
 	int i;
 	eHojaServicio bufferHoja;
 	if(arrayHoja!=NULL && limitHoja>0){
@@ -95,7 +95,7 @@ eHojaServicio VOU_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,in
 	return bufferHoja;
 }
 
-eHojaServicio VOU_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi){
+eHojaServicio HOJA_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi){
 	int i;
 	eHojaServicio bufferVou;
 	if(arrayHoja!=NULL && limitHoja>0){
@@ -132,3 +132,25 @@ int HOJA_PrintAll(eHojaServicio*arrayHoja,int limitHoja){
 	}
 	return iGet;
 }
+
+int HOJA_FechasDisponibles(eHojaServicio*arrayHoja,int limitHoja){
+	int iGet=-1;
+	int i;
+	if(arrayHoja!=NULL && limitHoja>0){
+		iGet=0;
+		for(i=0;i<limitHoja;i++){
+			if(arrayHoja[i].isEmpty==LLENO){
+				printf("\n\n  FECHA: %d / %d / %d",arrayHoja[i].fecha.dia,arrayHoja[i].fecha.mes,arrayHoja[i].fecha.anio);
+				iGet=0;
+			}
+		}
+	}
+	return iGet;
+}
+
+
+
+
+
+
+

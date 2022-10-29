@@ -9,9 +9,12 @@
 #include <string.h>
 
 #include "Biblioteca.h"
+
 #include "menuM.h"
 #include "tipo.h"
 #include "vehiculo.h"
+#include "nexo.h"
+
 #include "hojaServicio.h"
 
 #define VACIO 1
@@ -78,6 +81,7 @@ int NEXO_Edit(eVehiculo*arrayVehi,int limitVehi,eTipo*arrayTipo,int limitTipo){
 	int idEncontrado;
 	if(arrayVehi!=NULL && limitVehi>0 && arrayTipo !=NULL && limitTipo>0){
 		NEXO_PrintAll(arrayVehi, limitVehi, arrayTipo, limitTipo);
+
 		get_numInt(&idSearch,"\n\n  INGRESA ID A MODIFICAR >> ", "\n ERROR..",1,10, 2);
 		idEncontrado=VEHI_BuscarId(arrayVehi, limitVehi, idSearch);
 		if(idEncontrado>=0){
@@ -158,6 +162,8 @@ int NEXO_VehiculoAltaForzada(eVehiculo*arrayVehi,int limitVehi,int indice,int*id
 }
 
 ///================================================================================
+
+
 int NEXO_CargarHoja(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limitVehi,int index,int*idHoja){
 	int iGet=-1;
 	eHojaServicio bufferHoja;
@@ -188,7 +194,7 @@ int NEXO_AltaHoja(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int 
 	if(arrayHoja!=NULL && limitHoja>0 && idHoja!=NULL){
 		empty=HOJA_GetEmptyIndex(arrayHoja, limitHoja);
 		if(empty>=0){
-			NEXO_CargarHoja(arrayHoja, limitHoja, empty, idHoja);
+			NEXO_CargarHoja(arrayHoja,limitHoja,arrayVehi,limitVehi, empty, idHoja);
 			iGet=0;
 		}else
 			printf("\n ARRAY SIN ESPACIO...");

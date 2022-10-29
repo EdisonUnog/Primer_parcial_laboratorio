@@ -15,8 +15,8 @@ typedef struct{
 }eFechas;
 
 typedef struct{
-	int idHoja;
-	int idVehiculo;
+	int idHoja; // propío clave primaria
+	int idVehiculo; // busco c. foranea
 	char Descripcion[LEN_DES];
 	float precio;
 	eFechas fecha;
@@ -27,9 +27,10 @@ int HOJA_ArrayInit(eHojaServicio*arrayHoja,int limitHoja);
 int HOJA_GetEmptyIndex(eHojaServicio*arrayHoja,int limitHoja);
 int HOJA_CargarHOJA(eHojaServicio*arrayHoja,int limitHoja,int index,int*idHoja);
 int HOJA_Alta(eHojaServicio*arrayHoja,int limitHoja,int*idHoja);
-eHojaServicio VOU_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,int mes,int anio);
-eHojaServicio VOU_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi);
+eHojaServicio HOJA_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,int mes,int anio);
+eHojaServicio HOJA_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi);
 int HOJA_PrintUno(eHojaServicio*arrayHoja);
-int HOJA_PrintAll(eHojaServicio*arrayHoja,int limitHoja);
+int HOJA_FechasDisponibles(eHojaServicio*arrayHoja,int limitHoja);
+
 
 #endif /* HOJASERVICIO_H_ */
