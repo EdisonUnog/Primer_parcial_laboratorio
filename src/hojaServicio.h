@@ -30,7 +30,12 @@ int HOJA_Alta(eHojaServicio*arrayHoja,int limitHoja,int*idHoja);
 eHojaServicio HOJA_SearchByFecha(eHojaServicio*arrayHoja,int limitHoja,int dia,int mes,int anio);
 eHojaServicio HOJA_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi);
 int HOJA_PrintUno(eHojaServicio*arrayHoja);
+int HOJA_PrintAll(eHojaServicio*arrayHoja,int limitHoja);
 int HOJA_FechasDisponibles(eHojaServicio*arrayHoja,int limitHoja);
 
+int HOJA_AltaForzada(eHojaServicio*arrayHoja,int limit,int indice,int*id,int idVehiculo,char*descripcion,float precio,int dia,int mes,int anio);
+int HOJA_precioById(eHojaServicio*arrayHoja,int limitHoja,float*result,int idVehiculo);
+int HOJA_acumularPrecio(eHojaServicio*arrayHoja,int limitHoja,float*result);
+int HOJA_ALTAS(eHojaServicio*arrayHoja,int limitHoja,int*idHoja);
 
 #endif /* HOJASERVICIO_H_ */

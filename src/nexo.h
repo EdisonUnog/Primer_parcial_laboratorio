@@ -27,5 +27,6 @@ int NEXO_VehiculoAltaForzada(eVehiculo*arrayVehi,int limitVehi,int indice,int*id
 int NEXO_CargarHoja(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limitVehi,int index,int*idHoja);
 int NEXO_AltaHoja(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limitVehi,int*idHoja);
 
+int NEXO_ALTAS(eVehiculo*arrayVehi,int limitVehi,int*idAuto);
 
 #endif /* NEXO_H_ */

@@ -30,5 +30,6 @@ int TIP_PrintUno(eTipo*arrayTipo);
 int TIP_PrintAll(eTipo*arrayTipo,int limitTipo);
 
 int TIP_AltaForzada(eTipo*arrayTipo,int limitTipo,int index,int*id,char*charTipo);
+int TIPO_ALTAS(eTipo*arrayTipos,int limitTipo,int*idTipo);
 
 #endif /* TIPO_H_ */

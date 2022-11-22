@@ -133,7 +133,7 @@ int TIP_BuscarTipoT(eTipo*arrayTipo,int limitTipo,int tipoViaje){
 int TIP_PrintUno(eTipo*arrayTipo){
 	int iGet=-1;
 	if(arrayTipo!=NULL && arrayTipo->isEmpty==LLENO){
-		printf("\n\n ID VIAJE: %d\n DESTINO: %s",
+		printf("\n\n ID TIPO: %d\n DESTINO: %s",
 				arrayTipo->idTipo,arrayTipo->descripcion);
 		iGet=0;
 	}
@@ -169,6 +169,16 @@ int TIP_AltaForzada(eTipo*arrayTipo,int limitTipo,int index,int*id,char*charTipo
 	return iGet;
 }
 
+int TIPO_ALTAS(eTipo*arrayTipos,int limitTipo,int*idTipo){
+	int iGet=-1;
+	if(arrayTipos!=NULL && limitTipo>0 && idTipo!=NULL){
+		TIP_AltaForzada(arrayTipos, limitTipo, 0, idTipo, "SEDAN 3PTAS"); // 1
+		TIP_AltaForzada(arrayTipos, limitTipo, 1, idTipo, "SEDAN 5PTAS"); // 2
+		TIP_AltaForzada(arrayTipos, limitTipo, 2, idTipo, "CAMIONETAS");  //3
+		iGet=0;
+	}
+	return iGet;
+}
 
 
 

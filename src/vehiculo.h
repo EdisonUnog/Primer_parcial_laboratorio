@@ -10,7 +10,7 @@
 #define DESCRI 30
 #define COLOR 10
 typedef struct{
-	int idVehiculo;
+	int idVehiculo; // principal
 	char descripcioVe[DESCRI];
 	int modelo;
 	char color[COLOR];
@@ -28,5 +28,6 @@ int VEHI_BuscarId(eVehiculo*arrayVehi,int limitVehi,int idSearch);
 int VEHI_BuscarTipoVehi(eVehiculo*arrayVehi,int limitVehi,int tipo);
 int VEHI_PrintUno(eVehiculo*arrayVehi);
 int VEHI_PrintAll(eVehiculo*arrayVehi,int limitVehi);
+int VEHI_establecerTipo(int idTipo, char* tipoDescripcion);
 
 #endif /* VEHICULO_H_ */

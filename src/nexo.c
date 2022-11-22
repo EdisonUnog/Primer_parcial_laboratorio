@@ -121,7 +121,7 @@ int NEXO_PrintUno(eVehiculo arrayVehi,eTipo*arrayTipo,int limitTipo){
 	id=arrayVehi.idTipo;
 	auxTipo=TIP_SearchTipoId(arrayTipo, limitTipo, id);
 	if(arrayTipo!=NULL && limitTipo>0){
-		printf("\n\n ID AUTo: %d\n DESCRIPCION: %s\n MODELO: %d\n COLOR: %s\n ID TIPO: %d -> %s",
+		printf("\n\n ID VEHICULO: %d\n DESCRIPCION: %s\n MODELO: %d\n COLOR: %s\n ID TIPO: %d -> %s",
 				arrayVehi.idVehiculo,arrayVehi.descripcioVe,arrayVehi.modelo,arrayVehi.color,auxTipo.idTipo,auxTipo.descripcion);
 		iGet=0;
 	}
@@ -202,6 +202,14 @@ int NEXO_AltaHoja(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int 
 	return iGet;
 }
 
-
-
+int NEXO_ALTAS(eVehiculo*arrayVehi,int limitVehi,int*idAuto){
+	int iGet=-1;
+	if(arrayVehi!=NULL && limitVehi>0 && idAuto!=NULL){
+		NEXO_VehiculoAltaForzada(arrayVehi, limitVehi, 0, idAuto,"MODELO 0023", 1997, "ROJO", 2);       // 1
+		NEXO_VehiculoAltaForzada(arrayVehi, limitVehi, 1, idAuto,"MODELO 2344", 1900, "VERDE", 1);      // 2
+		NEXO_VehiculoAltaForzada(arrayVehi, limitVehi, 2, idAuto,"MODELO 3453", 1945, "NEGRO MATE", 3); // 3
+		iGet=0;
+	}
+	return iGet;
+}
 

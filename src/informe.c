@@ -54,14 +54,17 @@ int INFO_HojasByFecha(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,
 	int mes;
 	int anio;
 	int i;
-	int tipoDes;
+	int idVehi;
+	//int idTipo;
 	eHojaServicio bufferHoja;
-	eTipo bufferTipo;
+	eVehiculo bufferVehi;
 	if(arrayHoja!=NULL && limitHoja>0 ){
+
 		HOJA_FechasDisponibles(arrayHoja, limitHoja);
-		get_numInt(&dia,"\n\n FECHA DE VIAJE \n  DIA >> "," \n ERROR..",1,30,2);
+
+		get_numInt(&dia,"\n\n FECHA DE VIAJE \n  DIA >> "," \n ERROR..",1,31,2);
 		get_numInt(&mes,"  MES >> "," \n ERROR..",1,12,2);
-		get_numInt(&anio,"  ANIO >> "," \n ERROR..",2022,2023,2);
+		get_numInt(&anio,"  ANIO >> "," \n ERROR..",1900,2023,2);
 
 		bufferHoja=HOJA_SearchByFecha(arrayHoja, limitHoja, dia, mes, anio);
 
@@ -69,13 +72,10 @@ int INFO_HojasByFecha(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,
 		printf("\n   FECHAS DE LOS PROXIMOS VIAJES: %d / %d / %d ",bufferHoja.fecha.dia,bufferHoja.fecha.mes,bufferHoja.fecha.anio);
 		for(i=0;i<limit;i++){
 			if(arrayHoja[i].isEmpty==LLENO && arrayHoja[i].fecha.dia == dia && arrayHoja[i].fecha.mes==mes && arrayHoja[i].fecha.anio){
-				tipoDes=arrayVehi[i].idTipo;
-				bufferTipo=TIP_SearchTipoId(arrayTipo, limitTipo, tipoDes);
-				printf("\n\n   IDHOJA: %d\n    DESCRIPCION VOU: %s\n    PRECIO VOU: $$ [(%.2f])\n    FECHA: %d / %d / %d\n   ID DE VIAJE: %d",
-						arrayHoja[i].idHoja,arrayHoja[i].Descripcion,arrayHoja[i].precio,
-						bufferHoja.fecha.dia,bufferHoja.fecha.mes,bufferHoja.fecha.anio,arrayHoja[i].idVehiculo);
-				printf("\n    DESCRIPCION: %s\n    MODELO: %d\n   COLOR: %s\n   TIPO DE VIAJE: %d -> %s",
-						      arrayVehi[i].descripcioVe,arrayVehi[i].modelo,arrayVehi[i].color,arrayVehi[i].idTipo,bufferTipo.descripcion);
+				idVehi=arrayHoja[i].idVehiculo;
+				bufferVehi=VEHI_SearchViajeId(arrayVehi, limit, idVehi);
+				HOJA_PrintUno(&bufferHoja);
+				NEXO_PrintUno(bufferVehi, arrayTipo, limitTipo);
 				iGet=0;
 			}
 		}
@@ -84,50 +84,64 @@ int INFO_HojasByFecha(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,
 	return iGet;
 }
 
-int INFO_ImporteHojaViaje(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limit,eTipo*arrayTipo,int limitTipo){
+int INFO_ImporteDeVehiculo(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limit){
 	int iGet=-1;
-	int tipoSearch;
 	int i;
-	int tipoViaje;
-	int tipoVoucher;
-	float importe;
-	eTipo bufferTipo;
-	eHojaServicio bufferHoja;
-	eVehiculo bufferVeihi;
-	if(arrayVehi!=NULL && limit>0 && arrayTipo!=NULL && limitTipo>0){
+	int j;
+	int idSearch;
+	int index;
+	float result;
+	if(arrayHoja!=NULL && limitHoja>0 && arrayVehi!=NULL && limit>0 ){
 		VEHI_PrintAll(arrayVehi, limit);
-
-		get_numInt(&tipoSearch,"\n\n INGRESA TIPO DE VIAJE A IMPRIMIR >> ", " ERROR..",1, 10,2);
-		bufferVeihi=VEHI_SearchViajeId(arrayVehi, limit, tipoSearch);
-
-		printf("\n\n   ============================================");
-		printf("\n   --------- TIPO DE VIAJE:  ---------");
+		index=get_numInt(&idSearch, "\n\n INGRESA ID PARA BUSCAR VEHICULO >> ", "\n ERROR...", 1, 10, 2);
 		for(i=0;i<limit;i++){
-			if(arrayVehi[i].isEmpty==LLENO && arrayVehi[i].idVehiculo==tipoSearch){
-
-				tipoViaje=arrayVehi[i].idTipo;
-				bufferTipo=TIP_SearchTipoId(arrayTipo, limitTipo, tipoViaje);
-				tipoVoucher=arrayHoja[i].idVehiculo;
-				bufferHoja=HOJA_SearchTipo(arrayHoja, limitHoja, tipoVoucher);
-
-				importe=arrayHoja[i].precio;
-
-				printf("\n\n   ID HOJA: %d\n    DESCRIPCION VOU: %s\n    PRECIO VOU: $$ [(%.2f])\n    FECHA: %d / %d / %d\n   ID DE VEHICULO: %d",
-						bufferHoja.idHoja,bufferHoja.Descripcion,bufferHoja.precio,
-						bufferHoja.fecha.dia,bufferHoja.fecha.mes,bufferHoja.fecha.anio,bufferVeihi.idVehiculo);
-				printf("\n   DESCRIPCIP V. : %s\n   MODELO: %d\n  COLOR: %s\n TIPO: %d -> %s",
-						arrayVehi[i].descripcioVe,arrayVehi[i].modelo,arrayVehi[i].color,
-						bufferTipo.idTipo,bufferTipo.descripcion);
-				iGet=0;
-				printf("\n    IMPORTE FINAL._ PRECIO POR LA CANTIDAD DE PERSONAS: $$$ [( %.2f )]",importe);
+			for(j=0;j<limitHoja;j++){
+				if(index!=-1){
+					if(arrayVehi[i].idVehiculo==idSearch){
+						HOJA_precioById(arrayHoja, limitHoja, &result, idSearch);
+						iGet=0;
+					}
+				}
 			}
 		}
-		printf("\n\n   ============================================");
+		printf("\n IMPORTE DEL VEHICULO CON ID [( %d )] ES: %.2f",idSearch,result);
 	}
-
 	return iGet;
 }
 
+int INFO_ImporteDeVehiculoByFecha(eHojaServicio*arrayHoja,int limitHoja,eVehiculo*arrayVehi,int limit,eTipo*arraTipo,int limitTipo){
+	int iGet=-1;
+	int i;
+
+	int dia;
+	int mes;
+	int anio;
+
+	float acumulador=0;
+	char tipo[LEN_DES];
+
+	eHojaServicio bufferHoja;
+
+	if(arrayHoja!=NULL && limitHoja>0 && arrayVehi!=NULL && limit>0 ){
+		HOJA_FechasDisponibles(arrayHoja, limitHoja);
+		get_numInt(&dia,"\n\n FECHA DE ENTREGA \n  DIA >> "," \n ERROR..",1,31,2);
+		get_numInt(&mes,"  MES >> "," \n ERROR..",1,12,2);
+		get_numInt(&anio,"  ANIO >> "," \n ERROR..",1900,2023,2);
+
+		bufferHoja=HOJA_SearchByFecha(arrayHoja, limitHoja, dia, mes, anio);
+
+		printf("\n  FECHAS DE LAS PROXIMAS ENTREGAS: %d / %d / %d ",bufferHoja.fecha.dia,bufferHoja.fecha.mes,bufferHoja.fecha.anio);
+		for(i=0;i<limit;i++){
+			if(arrayHoja[i].isEmpty==LLENO && arrayHoja[i].fecha.dia == dia && arrayHoja[i].fecha.mes==mes && arrayHoja[i].fecha.anio){
+				acumulador+=arrayHoja[i].precio;
+				strncpy(tipo,arraTipo[i].descripcion,DES_LEN);
+				iGet=0;
+			}
+		}
+		printf("\n  IMPORTE TOTAL DE LOS VOUCHERS REALIZADOS CON TIPO [(%s)] ES DE [($$ %.2f)] PLANIFICADO EL %2d/%1d/%4d\n", tipo, acumulador, dia, mes, anio);
+	}
+	return iGet;
+}
 int INFO_Informes(eVehiculo*arrayVehi,int limit,eHojaServicio*arrayHoja,int limitHoja,eTipo*arrayTipo,int limitTipo){
 	int iGet=-1;
 	int opcion;
@@ -143,11 +157,11 @@ int INFO_Informes(eVehiculo*arrayVehi,int limit,eHojaServicio*arrayHoja,int limi
 				break;
 
 			case 3:
-				INFO_ImporteHojaViaje(arrayHoja, limitHoja, arrayVehi, limit, arrayTipo, limitTipo);
+				INFO_ImporteDeVehiculo(arrayHoja, limitHoja, arrayVehi, limit);
 				break;
 
 			case 4:
-				printf("\n PENDIENTE");
+				INFO_ImporteDeVehiculoByFecha(arrayHoja, limitHoja, arrayVehi, limit,arrayTipo, limitTipo);
 				break;
 
 			case 5:
@@ -156,6 +170,7 @@ int INFO_Informes(eVehiculo*arrayVehi,int limit,eHojaServicio*arrayHoja,int limi
 		}
 		iGet=0;
 	}while(opcion!=5);
+
 	return iGet;
 }
 

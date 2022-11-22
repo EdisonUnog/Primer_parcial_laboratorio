@@ -111,7 +111,7 @@ eHojaServicio HOJA_SearchTipo(eHojaServicio*arrayHoja,int limitHoja,int idVehi){
 
 int HOJA_PrintUno(eHojaServicio*arrayHoja){
 	int iGet=-1;
-	if(arrayHoja!=NULL){
+	if(arrayHoja!=NULL && arrayHoja->isEmpty==LLENO){
 		printf("\n\n ID HOJA: %d\n DESCRIPCION VOU: %s\n PRECIO VOU: $$ [(%.2f])\n FECHA: %d / %d / %d\n ID VEHICULO: %d",
 			arrayHoja->idHoja,arrayHoja->Descripcion,arrayHoja->precio,arrayHoja->fecha.dia,arrayHoja->fecha.mes,arrayHoja->fecha.anio,arrayHoja->idVehiculo);
 		iGet=0;
@@ -138,19 +138,79 @@ int HOJA_FechasDisponibles(eHojaServicio*arrayHoja,int limitHoja){
 	int i;
 	if(arrayHoja!=NULL && limitHoja>0){
 		iGet=0;
+		printf("\n FECHAS DISPONIBLES: ");
 		for(i=0;i<limitHoja;i++){
 			if(arrayHoja[i].isEmpty==LLENO){
-				printf("\n\n  FECHA: %d / %d / %d",arrayHoja[i].fecha.dia,arrayHoja[i].fecha.mes,arrayHoja[i].fecha.anio);
-				iGet=0;
+				printf("\n  FECHA: %d / %d / %d",
+						arrayHoja[i].fecha.dia,arrayHoja[i].fecha.mes,arrayHoja[i].fecha.anio);
 			}
 		}
 	}
 	return iGet;
 }
 
+int HOJA_AltaForzada(eHojaServicio*arrayHoja,int limitHoja,int indice,int*id,int idVehiculo,char*descripcion,float precio,int dia,int mes,int anio){
+	int iGet=-1;
+	eHojaServicio bufferHoja;
+	if(arrayHoja!=NULL && limitHoja>0 && indice<limitHoja && indice>=0 && id!=NULL && descripcion!=NULL){
+		strncpy(bufferHoja.Descripcion,descripcion,LEN_DES);
+		iGet=0;
+		bufferHoja.idHoja=*id;
+		bufferHoja.idVehiculo=idVehiculo;
+		bufferHoja.precio=precio;
+		bufferHoja.fecha.dia=dia;
+		bufferHoja.fecha.mes=mes;
+		bufferHoja.fecha.anio=anio;
+		bufferHoja.isEmpty=LLENO;
+		arrayHoja[indice]=bufferHoja;
+		(*id)++;
+	}
+	return iGet;
+}
 
+int HOJA_precioById(eHojaServicio*arrayHoja,int limitHoja,float*result,int idVehiculo){
+	int iGet=-1;
+	int i;
+	float acumulador=0;
+	if(arrayHoja!=NULL && limitHoja>0 ){
+		for(i=0;i<limitHoja;i++){
+			if(arrayHoja[i].isEmpty==LLENO && arrayHoja[i].idVehiculo==idVehiculo){
+				acumulador+=arrayHoja[i].precio;
+				iGet=0;
+			}
+		}
+	}
+	*result=acumulador;
+	return iGet;
+}
 
+int HOJA_acumularPrecio(eHojaServicio*arrayHoja,int limitHoja,float*result){
+	int rtn = -1;
+	float acumuladorPrecio = 0;
 
+	if (arrayHoja != NULL && limitHoja > 0){
+		for (int i = 0; i < limitHoja; i++){
+			if (arrayHoja[i].isEmpty == LLENO){
+				acumuladorPrecio += arrayHoja[i].precio;
+				rtn = 0;
+			}
+		}
+	}
+	*result = acumuladorPrecio;
+	return rtn;
+}
+
+int HOJA_ALTAS(eHojaServicio*arrayHoja,int limitHoja,int*idHoja){
+	int iGet=-1;
+	if(arrayHoja!=NULL && limitHoja>0 && idHoja!=NULL){
+		HOJA_AltaForzada(arrayHoja, limitHoja, 0, idHoja, 2, "AUTO 0", 123.34, 1, 03, 1997);
+		HOJA_AltaForzada(arrayHoja, limitHoja, 1, idHoja, 1, "AUTO 1", 125.34, 2, 06, 1900);
+		HOJA_AltaForzada(arrayHoja, limitHoja, 2, idHoja, 3, "AUTO 2", 126.34, 5, 12, 1945);
+		HOJA_AltaForzada(arrayHoja, limitHoja, 3, idHoja, 2, "AUTO 3", 127.34, 4, 12, 1945);
+		iGet=0;
+	}
+	return iGet;
+}
 
 
 

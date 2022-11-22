@@ -139,7 +139,7 @@ int VEHI_BuscarTipoVehi(eVehiculo*arrayVehi,int limitVehi,int tipo){
 int VEHI_PrintUno(eVehiculo*arrayVehi){
 	int iGet=-1;
 	if(arrayVehi!=NULL && arrayVehi->isEmpty==LLENO){
-		printf("\n\n ID AUTo: %d\n DESCRIPCION: %s\n MODELO: %d\n COLOR: %s\n ID TIPO: %d",
+		printf("\n\n ID VEHICULO: %d\n DESCRIPCION: %s\n MODELO: %d\n COLOR: %s\n ID TIPO: %d",
 				arrayVehi->idVehiculo,arrayVehi->descripcioVe,arrayVehi->modelo,arrayVehi->color,arrayVehi->idTipo);
 		iGet=0;
 	}
@@ -158,4 +158,28 @@ int VEHI_PrintAll(eVehiculo*arrayVehi,int limitVehi){
 		}
 	}
 	return iGet;
+}
+
+int VEHI_establecerTipo(int idTipo, char* tipoDescripcion){
+	int rtn = 1;
+
+	if(idTipo > 0 && tipoDescripcion != NULL){
+		switch(idTipo){
+			case 1:
+				strcpy(tipoDescripcion, "CAMIONETA");
+			break;
+
+			case 2:
+				strcpy(tipoDescripcion, "SEDAN 3PTAS");
+			break;
+
+			case 3:
+				strcpy(tipoDescripcion, "SEDAN 5PTAS");
+			break;
+		}
+
+		rtn = 0;
+	}
+
+	return rtn;
 }
